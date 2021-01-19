@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css'
 import { Container,Row,Col,Card ,Button, Alert} from 'react-bootstrap'
-
+import Footer from '../components/footer'
 import AppContext from '../AppContext.js'
 const { CartContext } = AppContext;
 const { Provider,Consumer } = createContext();
@@ -11,7 +11,6 @@ const { Provider,Consumer } = createContext();
 function MyPokemons() {
   const [collection,setCollection] = useState([])
   const props = useContext(CartContext)
-
   const cart = window.localStorage.getItem('cart')
   const [url] = useState(
     'https://pokeres.bastionbot.org/images/pokemon/'
@@ -101,24 +100,25 @@ function MyPokemons() {
                     {value => value.map((el,index)=> {
                       return (
                         <Col md={3} key={index}>
-                          <Link
-                            to={{
-                              pathname: "/detail",
-                              search: "?name=" + el.name,
-                              state: { fromDashboard: true }
-                            }} >
-                                
-                                <Card className="mt-2 p-2 border-0 cards">
-                                  <img src={url + el.id +'.png'} alt={el.name} className="rounded img-card" />
-                                  <Card.Body className="p-2">
-                                    <Card.Title className="text text-center"> {el.name }</Card.Title>
-                                  </Card.Body>
-                                </Card>
-                          </Link>
-                          <Button className="btn btn-block" onClick={()=>release(index)}> 
-                            <img src="/icons8-open-pokeball-48.png"  alt="poke"/> 
-                            Release
-                          </Button>
+                          <Card className="mt-2 p-2 border-0 cards">
+                            <Link
+                              to={{
+                                pathname: "/pokemon/"+el.id,
+                                state: { incollection: true }
+                              }} >
+                                  
+                              <img src={url + el.id +'.png'} alt={el.name} className="rounded img-card" />
+                            </Link>
+                            <Card.Body className="p-2">
+                              <Card.Title className="text text-center capitalize"> 
+                                {el.name}
+                              </Card.Title>
+                            </Card.Body>
+                            <Button className="btn btn-none" onClick={()=>release(index)}> 
+                              <img src="/icons8-open-pokeball-48.png"  alt="poke"/> 
+                              Release
+                            </Button>
+                          </Card>
                         </Col>
                       )
                     })}
@@ -129,6 +129,7 @@ function MyPokemons() {
           </Col>
         </Row>
       </Container>
+      <Footer/>
     </Provider>
   )
 }

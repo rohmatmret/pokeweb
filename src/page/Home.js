@@ -50,7 +50,7 @@ function Home () {
     }
     
     fetchData()
-  },[limit,offset])
+  },[limit,offset,BaseUrl.endpoint,BaseUrl.images])
 
   
 

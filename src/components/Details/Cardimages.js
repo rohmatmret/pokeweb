@@ -21,21 +21,21 @@ function CardImages({name,sprites,types,collection,index,id,onEdit}){
     if (active) {
       inputName.current.focus();
     } else if(!active && onEdit) {
-
+      
+      function updatedCollection(){
+        let objIndex = collection.findIndex((obj => obj._id === index));
+        
+        //Log object to Console.
+        console.log("Before update: ", collection[objIndex])
+        
+        //Update object's name property.
+        collection[objIndex].name = Iname
+        window.localStorage.setItem('cart',JSON.stringify(collection))
+      }
       updatedCollection()
     }
-  }, [active,inIndex]);
+  }, [Iname,active,inIndex,index,onEdit,collection]);
 
-  function updatedCollection(){
-    let objIndex = collection.findIndex((obj => obj._id === index));
-
-    //Log object to Console.
-    console.log("Before update: ", collection[objIndex])
-
-    //Update object's name property.
-    collection[objIndex].name = Iname
-    window.localStorage.setItem('cart',JSON.stringify(collection))
-  }
   return (
     <Card className="col-lg-12 cards-detail">
       <img src={sprites.front_default }  alt={sprites.front_default } 

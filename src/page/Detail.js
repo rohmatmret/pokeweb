@@ -73,7 +73,7 @@ function Details () {
     
     fetchData()
 
-  },[])
+  },[params.id,pokemons.name])
 
   useEffect(()=>{
     const fetchCart = () =>{

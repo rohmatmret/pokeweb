@@ -1,17 +1,16 @@
 import React, { useState, useEffect,useContext } from 'react';
-import { Redirect, useLocation } from 'react-router-dom'
+import { Redirect,Link,useParams } from 'react-router-dom'
+import { v4 as uuidv4 } from "uuid";
 import "../App.css"
-import { Container,Row,Col } from 'react-bootstrap'
+import { Container,Row,Col,Button } from 'react-bootstrap'
 import AppContext from '../AppContext.js'
 import CardLoading from '../components/Details/CardLoading'
 import CardMoves from '../components/Details/CardMoves'
 import CardImages from '../components/Details/Cardimages'
 import CardAbility from '../components/Details/CardAbility'
+import Footer from '../components/footer'
 const { CartContext } = AppContext;
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
 
 const defaultProps = {
   id:0,
@@ -30,8 +29,7 @@ const defaultProps = {
 
 
 function Details () {
-  let query = useQuery();
-  let name  =  query.get('name')
+  let params = useParams();
   const cart = window.localStorage.getItem('cart')
   const [pokemons, setPokemons] = useState(defaultProps)
   const [isLoading, setLoading]= useState(true)
@@ -41,12 +39,12 @@ function Details () {
   const [isErrors ,setErrors] = useState(false)
   const [actions ,setActions] = useState(false)
   const [isSuccessCatch ,setSuccessCatch] = useState(false)
-  
+  const [isFormEdit , setEditForm] = useState(false)
+  const [_id,setUid] = useState('null')
   useEffect(()=>{
-    document.title = 'Pokemon ' + query.get('name')
     const fetchData = async () =>{
       try {
-        const response = await fetch(`${apiUrl}${name}`)
+        const response = await fetch(`${apiUrl}${params.id}`)
         const data = await response.json()
         
         setPokemons(prevState => ({
@@ -70,6 +68,7 @@ function Details () {
         console.log('setloadiing false')
         setErrors(true)
       }
+      document.title = 'Pokemon '+pokemons.name
     }
     
     fetchData()
@@ -94,9 +93,10 @@ function Details () {
     setActions(true)
     let isSuccess = Math.random() < 0.5 ? true : false;
     if (isSuccess) {
-      
+      let uid = uuidv4()
       if (cart) {
         let data = {
+          _id:uid,
           name:pokemons.name,
           id: pokemons.id,
           url: pokemons.url
@@ -109,8 +109,10 @@ function Details () {
           props.setCart(incart.length)
         }
         setSuccessCatch(true)
+
       } else {
         let data = [{
+          _id:uid,
           name: pokemons.name,
           id: pokemons.id,
           url: pokemons.url
@@ -119,6 +121,7 @@ function Details () {
         window.localStorage.setItem('cart',JSON.stringify(data))
         setSuccessCatch(true)
       }
+      setUid(uid)
     } else {
       setSuccessCatch(false)
     }
@@ -127,28 +130,106 @@ function Details () {
 
 
   return (
-    <Container>
+    <>
+      <Container>
       <CardLoading isLoading={isLoading} />
-      <Row>
-        <Col lg={4}>
-          <CardImages name={pokemons.name} sprites={pokemons.sprites} types={pokemons.types} collection={collection}/>
-        </Col>
-        <Col lg={3}>
-          <CardAbility abilities={pokemons.abilities}/>
-        </Col>
-      </Row>
-      <Row>
-        <CardMoves moves={pokemons.moves} />
-      </Row>
-      <Row className="justify-content-md-center">
-        <Col md={1}>
-          <div className="btn-rounded button_bottom" onClick={add}> 
-            <img src="/icons8-pokeball-48.png" className="img-circle" alt="poke"/>
-          </div>
-          
-        </Col>
-      </Row>
+      { (actions === true && isSuccessCatch ===false) ? 
+        <>
+        <Row className="justify-content-md-center">
+          <Col lg={5}>
+            <h3 className="h3 text-center"> Opps Failed Catch</h3>
+          </Col>
+        </Row>
+        <Row className="justify-content-md-center">
+          <Col lg={3}>
+            <Link to="/" className="btn btn-block btn-dark link"> Back </Link>
+          </Col>
+        </Row>
+        </>
+      :
+        null
+      }
+      { (actions === true && isSuccessCatch ===true && isFormEdit === false) ? 
+        <>
+          <Row className="justify-content-md-center">
+            <Col lg={5}>
+              <h3 className="h3 text-center"> Yay .. i got a Pokemon</h3>
+            </Col>
+          </Row>
+          <Row className="justify-content-md-center">
+            <Col lg={3}>
+              <Button  className="btn btn-block btn-dark" onClick={()=>setEditForm(true)}> Next </Button>
+            </Col>
+          </Row>
+        </>
+      :
+        null
+      }
+      { (!actions && !isSuccessCatch) ? 
+        <>
+        <Row>
+          <Col lg={4}>
+            <CardImages 
+              name={pokemons.name} 
+              sprites={pokemons.sprites} 
+              types={pokemons.types} 
+              collection={collection}
+              index={_id}
+              id={pokemons.id}
+              onEdit={isFormEdit}
+            />
+          </Col>
+          <Col lg={3}>
+            <CardAbility 
+              abilities={pokemons.abilities}
+              height={pokemons.height}
+              weight={pokemons.weight}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <CardMoves moves={pokemons.moves} />
+        </Row>
+        <Row className="justify-content-md-center">
+          <Col md={1}>
+            <div className="btn-rounded button_bottom" onClick={add}> 
+              <img src="/icons8-pokeball-48.png" className="img-circle" alt="poke"/>
+            </div>
+            
+          </Col>
+        </Row>
+        </>
+      : null}
+      {isFormEdit ?
+        <>
+         <Row>
+           <Col lg={4}>
+             <CardImages 
+               name={pokemons.name} 
+               sprites={pokemons.sprites} 
+               types={pokemons.types} 
+               collection={collection}
+               index={_id}
+               id={pokemons.id}
+               onEdit={isFormEdit}
+             />
+           </Col>
+           <Col lg={3}>
+             <CardAbility abilities={pokemons.abilities}
+                height={pokemons.height}
+                weight={pokemons.weight}
+              />
+           </Col>
+         </Row>
+         <Row>
+           <CardMoves moves={pokemons.moves} />
+         </Row>
+         </>
+       :null}
+      
     </Container>
+    <Footer />
+    </>
   );
 
 }

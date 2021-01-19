@@ -1,7 +1,12 @@
 .img-card{
-  height: 150px;
-  width: auto;
-  margin: 10px 10px 40px;
+  display: block;
+  width: 120px;
+  height: auto;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left:auto;
+  margin-right:auto;
+  position: center;
 }
 
 .score {
@@ -21,24 +26,28 @@
 .button_bottom {
   position: fixed;
   bottom: 5%;
-  widows: 20em;
-  left:auto;
-  right: auto;
   z-index: 998;
   cursor: pointer;
   transition: .25s ease;
-  background-color: #fff;
+  background-color: transparent
+}
+.btn-rounded{
+  border-radius: 50%;
 }
 .btn-primary {
   color:black;
   background-color:none;
+}
+.btn-none{
+  color:black;
+  background-color: transparent;
 }
 .btn-none:hover {
   color:black;
   background-color:none;
 }
 
-.cards:hover{
+.cards{
   border-radius: 4px;
   background: #fff;
   box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
@@ -54,4 +63,28 @@
   transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
   padding: 14px 80px 18px 36px;
   cursor: pointer;
+}
+.capitalize {
+  color:black;
+  text-transform: capitalize;
+}
+.link:hover {
+  text-decoration: none;
+}
+.strong {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  color: white;
+  background-color: red;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  padding: 5px;
+}
+
+.btn-edit {
+  background-image: url('./img/icons8-pencil-100.png');
+  size: 100em;
 }

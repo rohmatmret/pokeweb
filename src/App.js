@@ -32,16 +32,7 @@ function App() {
           <Navbar.Collapse className="justify-content-end">
             
               <Navbar.Text>
-                <Link to={{ pathname :'/my-pokemon'}} className="ransel">
-                <img
-                  alt=""
-                  src="/ransel.png"
-                  width="45px"
-                  height="auto"
-                  className="d-inline-block align-top mr-1"
-                />
                 
-                </Link>
                 <Cart/>
               </Navbar.Text>
             
@@ -50,7 +41,7 @@ function App() {
         <div className="container-fluid mt-5 pt-4">
           <Switch>
             <Route exact path={["/", "/pokemon"]} component={Home} />
-            <Route exact path={["/pokemon/:id", "/detail"]} component={Detail} />
+            <Route exact path={["/pokemon/:id"]} component={Detail} />
             <Route exact path="/my-pokemon" component={MyPokemons} />
           </Switch>
         </div>
@@ -62,11 +53,22 @@ function App() {
 
 function Cart() {
   const props = useContext(CartContext)
-  // const countExistCart = getCart()
-  // props.setCart(countExistCart)
-
   return (
-    <strong>{props.cart}</strong>
+    <>
+      <Link to={{ pathname :'/my-pokemon'}} className="ransel">
+        <img
+          alt=""
+          src="/ransel.png"
+          width="45px"
+          height="auto"
+          className="d-inline-block align-top mr-1"
+        />
+        
+      </Link>
+      <div className="strong">
+        <strong>{props.cart}</strong>
+      </div>
+    </>
   )
 }
 

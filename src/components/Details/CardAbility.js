@@ -1,6 +1,6 @@
 import { Row,Col,Badge } from 'react-bootstrap'
 
-function CardAbility({abilities}){
+function CardAbility({abilities,height,weight}){
   return (
     <>
       <h4 className="h4">Ability</h4>
@@ -10,8 +10,8 @@ function CardAbility({abilities}){
     
       <Row>
         <Col>
-        <Badge>Height : {abilities.height}</Badge>
-        <Badge>Weight : {abilities.weight}</Badge>
+          <Badge pill variant="light" className="p-2">Height : {height}</Badge>
+          <Badge pill variant="light" className="p-2">Weight : {weight}</Badge>
         </Col>
       </Row>
     </>

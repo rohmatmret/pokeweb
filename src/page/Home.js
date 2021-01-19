@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,Suspense } from 'react';
 import { Spinner,Row,Col,Container,Button } from 'react-bootstrap'
-
-import PokemonList from '../components/Pokemons/PokemonList'
-import Footer from '../components/footer'
 import "../App.css"
+
+const PokemonList = React.lazy(()=> import('../components/Pokemons/PokemonList'));
+const Footer = React.lazy(()=> import('../components/footer'));
+
 
 const defaultProps = {
   count: 0,
@@ -73,7 +74,9 @@ function Home () {
         </Row>
         <Row>
           <Col lg={12}>
-              <PokemonList pokemons={pokemons.results} url={BaseUrl.images}/>
+            <Suspense fallback={<div>Loading...</div>}>
+                <PokemonList pokemons={pokemons.results} url={BaseUrl.images}/>
+            </Suspense>
           </Col>
         </Row>
         <Row className="justify-content-md-center mt-3 p-3">
@@ -85,7 +88,9 @@ function Home () {
 
         </Row>
       </Container>
-      <Footer />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Footer />
+      </Suspense>
     </>
   );
 }

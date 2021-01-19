@@ -1,14 +1,14 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect,useContext,Suspense } from 'react';
 import { Redirect,Link,useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from "uuid";
 import "../App.css"
 import { Container,Row,Col,Button } from 'react-bootstrap'
 import AppContext from '../AppContext.js'
-import CardLoading from '../components/Details/CardLoading'
-import CardMoves from '../components/Details/CardMoves'
-import CardImages from '../components/Details/Cardimages'
-import CardAbility from '../components/Details/CardAbility'
-import Footer from '../components/footer'
+const CardLoading = React.lazy(()=> import( '../components/Details/CardLoading'));
+const CardMoves = React.lazy(()=> import( '../components/Details/CardMoves'));
+const CardImages = React.lazy(()=> import( '../components/Details/Cardimages'));
+const CardAbility = React.lazy(()=> import( '../components/Details/CardAbility'));
+const Footer = React.lazy(()=> import( '../components/footer'));
 const { CartContext } = AppContext;
 
 
@@ -132,7 +132,9 @@ function Details () {
   return (
     <>
       <Container>
-      <CardLoading isLoading={isLoading} />
+        <Suspense fallback={<div>Loading...</div>}>
+            <CardLoading isLoading={isLoading} />
+        </Suspense>
       { (actions === true && isSuccessCatch ===false) ? 
         <>
         <Row className="justify-content-md-center">
@@ -169,26 +171,32 @@ function Details () {
         <>
         <Row>
           <Col lg={4}>
-            <CardImages 
-              name={pokemons.name} 
-              sprites={pokemons.sprites} 
-              types={pokemons.types} 
-              collection={collection}
-              index={_id}
-              id={pokemons.id}
-              onEdit={isFormEdit}
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+              <CardImages 
+                name={pokemons.name} 
+                sprites={pokemons.sprites} 
+                types={pokemons.types} 
+                collection={collection}
+                index={_id}
+                id={pokemons.id}
+                onEdit={isFormEdit}
+              />
+            </Suspense>
           </Col>
           <Col lg={3}>
-            <CardAbility 
-              abilities={pokemons.abilities}
-              height={pokemons.height}
-              weight={pokemons.weight}
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+              <CardAbility 
+                abilities={pokemons.abilities}
+                height={pokemons.height}
+                weight={pokemons.weight}
+              />
+            </Suspense>
           </Col>
         </Row>
         <Row>
+        <Suspense fallback={<div>Loading...</div>}>
           <CardMoves moves={pokemons.moves} />
+          </Suspense>
         </Row>
         <Row className="justify-content-md-center">
           <Col md={1}>
@@ -204,6 +212,7 @@ function Details () {
         <>
          <Row>
            <Col lg={4}>
+           <Suspense fallback={<div>Loading...</div>}>
              <CardImages 
                name={pokemons.name} 
                sprites={pokemons.sprites} 
@@ -213,22 +222,29 @@ function Details () {
                id={pokemons.id}
                onEdit={isFormEdit}
              />
+             </Suspense>
            </Col>
            <Col lg={3}>
+           <Suspense fallback={<div>Loading...</div>}>
              <CardAbility abilities={pokemons.abilities}
                 height={pokemons.height}
                 weight={pokemons.weight}
               />
+            </Suspense>
            </Col>
          </Row>
          <Row>
+         <Suspense fallback={<div>Loading...</div>}>
            <CardMoves moves={pokemons.moves} />
+           </Suspense>
          </Row>
          </>
        :null}
       
     </Container>
-    <Footer />
+    <Suspense fallback={<div>Loading...</div>}>
+      <Footer />
+    </Suspense>
     </>
   );
 

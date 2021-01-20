@@ -39,17 +39,16 @@ function CardImages({name,sprites,types,collection,index,id,onEdit}){
       
         { onEdit ?
             <div className="form-group row">
-              <Col sm={10}>
+              <Col lg={10}>
                 <input type="text" ref={inputName}
                 onChange={handleChange}
                 className="form-control" value={Iname}
                 disabled={active ? false : true}
                 />
               </Col>
-              <Col sm={2}>
+              <Col lg={2}>
                 <Button className="btn btn-block btn-light" onClick={()=>setActive(active ? false : true)}>
                   <i className="fa fa-pencil" aria-hidden="true"></i> 
-                  {active ? 'Save':'Edit'}
                 </Button>
               </Col>
             </div>

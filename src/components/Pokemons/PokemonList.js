@@ -46,10 +46,12 @@ const PokemonList =({pokemons,url})=> {
                         
                         {/* <img src={url +rewrite(myTrim(el.url))} alt={el.name} className="img-rounded img-card" /> */}
                         <LazyLoadImage
-                          className="img-card"
-                         alt={el.name}
-                         effect="blur"
-                         src={url +rewrite(myTrim(el.url))} 
+                          className="img-cards"
+                          height={200}
+                          width={200}
+                          alt={el.name}
+                          effect="blur"
+                          src={url +rewrite(myTrim(el.url))} 
                          />
                       </Link>
                       <Card.Body className="p-2 text-center">

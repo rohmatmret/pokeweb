@@ -8,7 +8,13 @@
   margin-right:auto;
   position: center;
 }
-
+.img-cards {
+  display:block;
+  width: 80%;
+  height: 80%;
+  margin-left:auto;
+  margin-right:auto;
+}
 .score {
   font-size: 5em;
 }
@@ -55,7 +61,13 @@
   padding: 14px 80px 18px 36px;
   cursor: pointer;
 }
-
+.cards>img{
+  display:block;
+  width: 80%;
+  height: 80%;
+  margin-left:auto;
+  margin-right:auto; 
+}
 .cards-detail{
   border-radius: 4px;
   background: #fff;

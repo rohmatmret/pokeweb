@@ -9,6 +9,7 @@ import Detail from './page/Detail.js'
 import MyPokemons from './page/mypokemon.js'
 import Home from './page/Home.js'
 import AppContext from './AppContext.js'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const { CartProvider, CartContext } = AppContext
 

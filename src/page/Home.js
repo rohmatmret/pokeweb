@@ -1,6 +1,7 @@
 import React, { useState, useEffect,Suspense } from 'react';
 import { Spinner,Row,Col,Container,Button } from 'react-bootstrap'
 import "../App.css"
+import 'font-awesome/css/font-awesome.min.css';
 
 const PokemonList = React.lazy(()=> import('../components/Pokemons/PokemonList'));
 const Footer = React.lazy(()=> import('../components/footer'));
@@ -53,7 +54,10 @@ function Home () {
     fetchData()
   },[limit,offset,BaseUrl.endpoint,BaseUrl.images])
 
-  
+  const loadMore =()=> {
+    setLoading(true)
+    setLimit(prevState => prevState + defaultView)
+  }
 
   return (
     <>
@@ -79,16 +83,16 @@ function Home () {
             </Suspense>
           </Col>
         </Row>
-        <Row className="justify-content-md-center mt-3 p-3">
-          <Col lg={2}>
-            <Button className="btn btb-block btn-light" onClick={()=>setLimit(prevState => prevState + defaultView)}>
-              Load more
+        <Row className="justify-content-md-center mt-3">
+          <Col md={2}>
+            <Button className="btn btn-block btn-light" onClick={loadMore}>
+              <i className="fa fa-arrow-circle-down" aria-hidden="true"></i> {isLoading ? "Loading":"Load More"}
             </Button>
           </Col>
 
         </Row>
       </Container>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={null}>
         <Footer />
       </Suspense>
     </>

@@ -1,6 +1,6 @@
 import React, { useState,useEffect,createContext,useContext } from 'react';
 import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import '../App.css'
 import { Container,Row,Col,Card ,Button, Alert} from 'react-bootstrap'
 import Footer from '../components/footer'
@@ -66,8 +66,8 @@ function MyPokemons() {
           
           { isEmpty ? 
             <Col lg={2}>
-              <Link to="/">
-                <img src="./explore.png" className="img-rounded" alt="explore" />
+              <Link to="/" className="btn btn-block btn-light">
+                <i className="fa fa-compass" aria-hidden="true"></i>
               </Link>
             </Col>
           : null}
@@ -75,10 +75,10 @@ function MyPokemons() {
         <Row>
           <Col lg={12}>
             <Container>
-              {isSuccessRealease ?
+              {(isSuccessRealease && !isEmpty) ?
                 <>
                   <Row className="justify-content-md-center">
-                    <Col lg={4}>
+                    <Col lg={12}>
                       <Alert  variant={'success'}>
                         Success Realease
                       </Alert>
@@ -87,8 +87,8 @@ function MyPokemons() {
                   <Row className="justify-content-md-center">
                     { !isEmpty ?
                       <Col lg={2}>
-                        <Button className="btn btn-block btn-dark" onClick={()=>setRealease(false)}>
-                          Back
+                        <Button className="btn btn-block btn-light" onClick={()=>setRealease(false)}>
+                          <i class="fa fa-arrow-left" aria-hidden="true"></i>
                         </Button>
                       </Col>
                     :null}

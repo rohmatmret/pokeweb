@@ -1,6 +1,7 @@
 import React, { useState,useRef,useEffect } from 'react';
-import { Card,Badge,Row, Col } from 'react-bootstrap'
+import { Card,Badge,Row, Col,Button } from 'react-bootstrap'
 import '../../App.css'
+import 'font-awesome/css/font-awesome.min.css';
 function CardImages({name,sprites,types,collection,index,id,onEdit}){
   const [Iname, setName] = useState(name? name :null)
   const [active, setActive] =useState(onEdit)
@@ -24,11 +25,6 @@ function CardImages({name,sprites,types,collection,index,id,onEdit}){
       
       function updatedCollection(){
         let objIndex = collection.findIndex((obj => obj._id === index));
-        
-        //Log object to Console.
-        console.log("Before update: ", collection[objIndex])
-        
-        //Update object's name property.
         collection[objIndex].name = Iname
         window.localStorage.setItem('cart',JSON.stringify(collection))
       }
@@ -37,30 +33,24 @@ function CardImages({name,sprites,types,collection,index,id,onEdit}){
   }, [Iname,active,inIndex,index,onEdit,collection]);
 
   return (
-    <Card className="col-lg-12 cards-detail">
+    <Card className="cards-detail">
       <img src={sprites.front_default }  alt={sprites.front_default } 
         className="rounded detail-img-card"/>
       
-        {onEdit ?
-
+        { onEdit ?
             <div className="form-group row">
-              <Col sm={9}>
+              <Col sm={10}>
                 <input type="text" ref={inputName}
                 onChange={handleChange}
                 className="form-control" value={Iname}
                 disabled={active ? false : true}
                 />
               </Col>
-              <Col sm={3}>
-                <div className="btn btn-sm btn-light" onClick={()=>setActive(active ? false : true)}>
-                  {active ? 'Save' :'Edit'}
-                  <img
-                    alt=""
-                    src="/icons8-pencil-100.png"
-                    width="25px"
-                    height="auto"
-                    />
-                </div>
+              <Col sm={2}>
+                <Button className="btn btn-block btn-light" onClick={()=>setActive(active ? false : true)}>
+                  <i className="fa fa-pencil" aria-hidden="true"></i> 
+                  {active ? 'Save':'Edit'}
+                </Button>
               </Col>
             </div>
         
@@ -75,13 +65,13 @@ function CardImages({name,sprites,types,collection,index,id,onEdit}){
         <Card.Text className="text text-center">
           <Badge className="badge badge-light"> OWNED {findOwned(id)} </Badge>
         </Card.Text>
-        <Row>
+        <Row className="justify-content-md-center">
           { types.map((t,index) => {
             return ( 
-            <Col md={2}>
-              <Badge key={index}  variant="primary" 
-              className="p-2 mr-1">{t.type ? t.type.name :null} 
-              </Badge>
+              <Col md={3}>
+                <Badge key={index} pill  variant="primary" 
+                  className="p-2 mr-2">{t.type ? t.type.name :null} 
+                </Badge>
               </Col>
             )
           })}

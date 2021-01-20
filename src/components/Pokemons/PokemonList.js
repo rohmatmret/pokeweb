@@ -1,6 +1,8 @@
 import React, { useEffect, useState} from 'react';
 import { Row, Col,Container,Card,Badge} from 'react-bootstrap'
 import { Link } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const PokemonList =({pokemons,url})=> {
   const [MyCollection, setMyCollection] = useState([])
@@ -42,7 +44,13 @@ const PokemonList =({pokemons,url})=> {
                         state: { fromDashboard: true }
                       }} >
                         
-                        <img src={url +rewrite(myTrim(el.url))} alt={el.name} className="img-rounded img-card" />
+                        {/* <img src={url +rewrite(myTrim(el.url))} alt={el.name} className="img-rounded img-card" /> */}
+                        <LazyLoadImage
+                          className="img-card"
+                         alt={el.name}
+                         effect="blur"
+                         src={url +rewrite(myTrim(el.url))} 
+                         />
                       </Link>
                       <Card.Body className="p-2 text-center">
                         <Card.Text className="text text-center capitalize"> {el.name }</Card.Text>

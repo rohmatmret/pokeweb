@@ -132,7 +132,7 @@ function Details () {
   return (
     <>
       <Container>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={null}>
             <CardLoading isLoading={isLoading} />
         </Suspense>
       { (actions === true && isSuccessCatch ===false) ? 
@@ -144,7 +144,9 @@ function Details () {
         </Row>
         <Row className="justify-content-md-center">
           <Col lg={3}>
-            <Link to="/" className="btn btn-block btn-dark link"> Back </Link>
+            <Link to="/" className="btn btn-block btn-light"> 
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </Link>
           </Col>
         </Row>
         </>
@@ -153,14 +155,18 @@ function Details () {
       }
       { (actions === true && isSuccessCatch ===true && isFormEdit === false) ? 
         <>
-          <Row className="justify-content-md-center">
+          <Row className="justify-content-md-center mt-3">
             <Col lg={5}>
-              <h3 className="h3 text-center"> Yay .. i got a Pokemon</h3>
+                <h3 className="h3 text-center"> Yay ..</h3>
+                <h4 className="h4 text-center">i got a Pokemon</h4>
+               
             </Col>
           </Row>
           <Row className="justify-content-md-center">
-            <Col lg={3}>
-              <Button  className="btn btn-block btn-dark" onClick={()=>setEditForm(true)}> Next </Button>
+            <Col lg={2}>
+              <Button  className="btn btn-block btn-light" onClick={()=>setEditForm(true)}> 
+                Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                </Button>
             </Col>
           </Row>
         </>
@@ -171,7 +177,7 @@ function Details () {
         <>
         <Row>
           <Col lg={4}>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={null}>
               <CardImages 
                 name={pokemons.name} 
                 sprites={pokemons.sprites} 
@@ -184,7 +190,7 @@ function Details () {
             </Suspense>
           </Col>
           <Col lg={3}>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={null}>
               <CardAbility 
                 abilities={pokemons.abilities}
                 height={pokemons.height}
@@ -194,7 +200,7 @@ function Details () {
           </Col>
         </Row>
         <Row>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={null}>
           <CardMoves moves={pokemons.moves} />
           </Suspense>
         </Row>
@@ -212,7 +218,7 @@ function Details () {
         <>
          <Row>
            <Col lg={4}>
-           <Suspense fallback={<div>Loading...</div>}>
+           <Suspense fallback={null}>
              <CardImages 
                name={pokemons.name} 
                sprites={pokemons.sprites} 
@@ -225,7 +231,7 @@ function Details () {
              </Suspense>
            </Col>
            <Col lg={3}>
-           <Suspense fallback={<div>Loading...</div>}>
+           <Suspense fallback={null}>
              <CardAbility abilities={pokemons.abilities}
                 height={pokemons.height}
                 weight={pokemons.weight}
@@ -234,7 +240,7 @@ function Details () {
            </Col>
          </Row>
          <Row>
-         <Suspense fallback={<div>Loading...</div>}>
+         <Suspense fallback={null}>
            <CardMoves moves={pokemons.moves} />
            </Suspense>
          </Row>
@@ -242,7 +248,7 @@ function Details () {
        :null}
       
     </Container>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={null}>
       <Footer />
     </Suspense>
     </>

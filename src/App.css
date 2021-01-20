@@ -1,6 +1,6 @@
 .img-card{
   display: block;
-  width: 120px;
+  width: 40%;
   height: auto;
   margin-top: 2em;
   margin-bottom: 2em;
@@ -84,7 +84,9 @@
   padding: 5px;
 }
 
-.btn-edit {
-  background-image: url('./img/icons8-pencil-100.png');
-  size: 100em;
+.fixed_center_div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
